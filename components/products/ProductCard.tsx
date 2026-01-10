@@ -3,7 +3,8 @@
 import { Heart, ShoppingCart, Star } from 'lucide-react'
 import { useState } from 'react'
 import { formatPrice } from '@/lib/constants'
-
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 interface ProductCardProps {
   id: string
   name: string
@@ -42,16 +43,21 @@ export function ProductCard({
     setIsFavorite(!isFavorite)
     // TODO: Implémenter la logique des favoris
   }
+  const router = useRouter()
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group">
+    <div  className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group">
       {/* Image Container */}
       <div className="relative aspect-square overflow-hidden bg-gray-100">
+
+        <Link href={`/product/${id}`}>
         <img
           src={image}
           alt={name}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
+
+        </Link>
         
         {/* Badges */}
         <div className="absolute top-2 left-2 right-2 flex justify-between items-start">
@@ -91,7 +97,7 @@ export function ProductCard({
         </button>
 
         {/* Overlay avec bouton panier au survol */}
-        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+        {/* <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <button
             onClick={handleAddToCart}
             disabled={stock === 0 || isAddingToCart}
@@ -113,58 +119,61 @@ export function ProductCard({
               </>
             )}
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Informations du produit */}
+
+
       <div className="p-3">
-        {/* Catégorie */}
-        <p className="text-xs text-gray-500 font-medium mb-1">{category}</p>
-        
-        {/* Nom du produit */}
-        <h3 className="font-semibold text-gray-900 text-sm mb-2 line-clamp-2 h-10">
-          {name}
-        </h3>
+          {/* Catégorie */}
+          <p className="text-xs text-gray-500 font-medium mb-1">{category}</p>
+          
+          {/* Nom du produit */}
+          <h3 className="font-semibold text-gray-900 text-sm mb-2 line-clamp-2 h-10">
+            {name}
+          </h3>
 
-        {/* Note et Prix */}
-        <div className="flex items-center justify-between">
-          {/* Note */}
-          <div className="flex items-center gap-1">
-            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-            <span className="text-xs font-semibold text-gray-900">{rating}</span>
+          {/* Note et Prix */}
+          <div className="flex items-center justify-between">
+            {/* Note */}
+            <div className="flex items-center gap-1">
+              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+              <span className="text-xs font-semibold text-gray-900">{rating}</span>
+            </div>
+
+            {/* Prix */}
+            <div className="text-right">
+              <p className="font-bold text-amber-700 text-sm">
+                {formatPrice(price)}
+              </p>
+            </div>
           </div>
 
-          {/* Prix */}
-          <div className="text-right">
-            <p className="font-bold text-amber-700 text-sm">
-              {formatPrice(price)}
-            </p>
-          </div>
+          {/* Bouton d'ajout mobile (visible uniquement sur mobile) */}
+          <button
+            onClick={handleAddToCart}
+            disabled={stock === 0 || isAddingToCart}
+            className={`w-full mt-3 py-2 rounded-lg font-semibold text-sm transition-all flex items-center justify-center gap-2 md:hidden ${
+              stock === 0
+                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                : 'bg-amber-700 text-white hover:bg-amber-800 active:scale-95'
+            }`}
+          >
+            {isAddingToCart ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <span>Ajout...</span>
+              </>
+            ) : (
+              <>
+                <ShoppingCart className="w-4 h-4" />
+                <span>{stock === 0 ? 'Épuisé' : 'Ajouter'}</span>
+              </>
+            )}
+          </button>
         </div>
-
-        {/* Bouton d'ajout mobile (visible uniquement sur mobile) */}
-        <button
-          onClick={handleAddToCart}
-          disabled={stock === 0 || isAddingToCart}
-          className={`w-full mt-3 py-2 rounded-lg font-semibold text-sm transition-all flex items-center justify-center gap-2 md:hidden ${
-            stock === 0
-              ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-              : 'bg-amber-700 text-white hover:bg-amber-800 active:scale-95'
-          }`}
-        >
-          {isAddingToCart ? (
-            <>
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              <span>Ajout...</span>
-            </>
-          ) : (
-            <>
-              <ShoppingCart className="w-4 h-4" />
-              <span>{stock === 0 ? 'Épuisé' : 'Ajouter'}</span>
-            </>
-          )}
-        </button>
-      </div>
     </div>
+
   )
 }

@@ -1,10 +1,7 @@
-// src/app/product/[id]/page.tsx
+'use client'
 
-'use client';
-
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { 
   ArrowLeft, 
   Heart, 
@@ -13,82 +10,100 @@ import {
   MessageCircle,
   Phone,
   ShoppingCart,
-  Check
-} from 'lucide-react';
-import { Button } from '@/components/ui/Button3';
+} from 'lucide-react'
+import { Button } from '@/components/ui/Button3'
+import { formatPrice } from '@/lib/constants'
 
 // Types
 interface ProductImage {
-  id: number;
-  url: string;
-  alt: string;
+  id: number
+  url: string
+  alt: string
 }
 
-interface WeightOption {
-  value: string;
-  label: string;
-  price: number;
+interface SizeOption {
+  value: string
+  label: string
+  price: number
 }
 
 interface Seller {
-  name: string;
-  role: string;
-  avatar: string;
+  name: string
+  role: string
+  avatar: string
+  phone: string
 }
 
 export default function ProductDetailPage({ params }: { params: { id: string } }) {
-  const router = useRouter();
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(0);
-  const [selectedWeight, setSelectedWeight] = useState('0.5');
-  const [quantity, setQuantity] = useState(1);
-  const [showFullDescription, setShowFullDescription] = useState(false);
+  const router = useRouter()
+  const [isFavorite, setIsFavorite] = useState(false)
+  const [selectedImage, setSelectedImage] = useState(0)
+  const [selectedSize, setSelectedSize] = useState('medium')
+  const [quantity, setQuantity] = useState(1)
+  const [showFullDescription, setShowFullDescription] = useState(false)
 
   // Données du produit (à remplacer par un appel API)
   const product = {
     id: params.id,
-    name: 'Chocolate Cake',
-    category: 'Cake',
+    name: 'Gâteau au Chocolat Suprême',
+    category: 'Gâteaux',
     rating: 4.9,
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    description: 'Notre fameux gâteau au chocolat, moelleux comme du beurre de karité ! Préparé avec du chocolat noir de qualité supérieure et des ingrédients frais. Parfait pour vos cérémonies, anniversaires et événements spéciaux. Un délice qui ravira vos papilles et celles de vos invités. Fait avec amour dans notre pâtisserie à Yaoundé.',
     images: [
-      { id: 1, url: '/images/cake-main.jpg', alt: 'Chocolate Cake' },
-      { id: 2, url: '/images/cake-2.jpg', alt: 'Vue 2' },
-      { id: 3, url: '/images/cake-3.jpg', alt: 'Vue 3' },
-      { id: 4, url: '/images/cake-4.jpg', alt: 'Vue 4' },
-      { id: 5, url: '/images/cake-5.jpg', alt: 'Vue 5' },
+      { id: 1, url: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&q=80', alt: 'Gâteau Chocolat' },
+      { id: 2, url: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=800&q=80', alt: 'Vue 2' },
+      { id: 3, url: 'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=800&q=80', alt: 'Vue 3' },
+      { id: 4, url: 'https://images.unsplash.com/photo-1588195538326-c5acd4628c1d?w=800&q=80', alt: 'Vue 4' },
     ] as ProductImage[],
     seller: {
-      name: 'Jenny Wilson',
-      role: 'Cook',
-      avatar: '/images/seller-avatar.jpg',
+      name: 'Chef Marie Nguema',
+      role: 'Pâtissière',
+      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80',
+      phone: '+237 6 77 88 99 00',
     } as Seller,
-    weightOptions: [
-      { value: '0.5', label: '0.5 Kg', price: 25 },
-      { value: '1', label: '1 Kg', price: 45 },
-      { value: '1.5', label: '1.5 Kg', price: 65 },
-      { value: '2', label: '2 Kg', price: 85 },
-      { value: '4', label: '4 Kg', price: 160 },
-    ] as WeightOption[],
-  };
+    sizeOptions: [
+      { value: 'small', label: 'Petit (6 pers)', price: 5500 },
+      { value: 'medium', label: 'Moyen (12 pers)', price: 8500 },
+      { value: 'large', label: 'Grand (20 pers)', price: 15000 },
+      { value: 'xlarge', label: 'XL (30 pers)', price: 22000 },
+    ] as SizeOption[],
+    stock: 12,
+  }
 
-  const currentPrice = product.weightOptions.find(w => w.value === selectedWeight)?.price || 25;
-  const totalPrice = currentPrice * quantity;
+  const currentPrice = product.sizeOptions.find(s => s.value === selectedSize)?.price || 8500
+  const totalPrice = currentPrice * quantity
 
   const handleAddToCart = () => {
-    console.log('Add to cart:', {
+    console.log('Ajouter au panier:', {
       productId: product.id,
-      weight: selectedWeight,
+      size: selectedSize,
       quantity,
       totalPrice,
-    });
+    })
     // TODO: Ajouter au panier
-  };
+    alert('Produit ajouté au panier ! 🎉')
+  }
+
+  const handleWhatsAppContact = () => {
+    const message = `Bonjour, je suis intéressé par le ${product.name}`
+    const url = `https://wa.me/${product.seller.phone.replace(/\s/g, '')}?text=${encodeURIComponent(message)}`
+    window.open(url, '_blank')
+  }
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: product.name,
+        text: `Découvrez ce délicieux ${product.name} !`,
+        url: window.location.href,
+      })
+    }
+  }
 
   return (
     <main className="min-h-screen bg-gray-50 pb-32">
       {/* Header avec image principale */}
-      <div className="relative h-[450px] bg-gradient-to-br from-amber-50 to-orange-50">
+      <div className="relative h-112.5 bg-linear-to-br from-amber-50 to-orange-50">
         {/* Navigation */}
         <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between p-4 safe-top">
           <button
@@ -110,21 +125,22 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
               />
             </button>
 
-            <button className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-50 transition-all active:scale-95">
+            <button 
+              onClick={handleShare}
+              className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-50 transition-all active:scale-95"
+            >
               <Share2 className="w-6 h-6 text-gray-900" />
             </button>
           </div>
         </div>
 
         {/* Image principale */}
-        <div className="relative w-full h-full flex items-center justify-center p-8">
-          <div className="relative w-full max-w-md aspect-square">
-            <Image
-              src={product.images[selectedImage]?.url || '/images/placeholder.jpg'}
+        <div className="relative w-full h-full flex items-center justify-center">
+          <div className="relative w-full aspect-square">
+            <img
+              src={product.images[selectedImage]?.url || '/logo.png'}
               alt={product.images[selectedImage]?.alt || product.name}
-              fill
-              className="object-contain drop-shadow-2xl"
-              priority
+              className="w-full h-full object-cover drop-shadow-2xl"
             />
           </div>
         </div>
@@ -142,11 +158,10 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
                     : 'opacity-60 hover:opacity-100'
                 }`}
               >
-                <Image
+                <img
                   src={image.url}
                   alt={image.alt}
-                  fill
-                  className="object-cover"
+                  className="w-full h-full object-cover"
                 />
                 {selectedImage === index && (
                   <div className="absolute inset-0 bg-white/20" />
@@ -175,7 +190,9 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
           {/* Badge de disponibilité */}
           <div className="flex items-center gap-1.5 bg-emerald-50 px-3 py-1.5 rounded-full flex-shrink-0">
             <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-            <span className="text-emerald-700 text-xs font-medium">Available</span>
+            <span className="text-emerald-700 text-xs font-medium">
+              {product.stock} en stock
+            </span>
           </div>
         </div>
 
@@ -183,11 +200,10 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
         <div className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
           <div className="flex items-center gap-3">
             <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-white">
-              <Image
+              <img
                 src={product.seller.avatar}
                 alt={product.seller.name}
-                fill
-                className="object-cover"
+                className="w-full h-full object-cover"
               />
             </div>
             <div>
@@ -197,12 +213,20 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
           </div>
 
           <div className="flex items-center gap-2">
-            <button className="w-10 h-10 bg-amber-600 rounded-full flex items-center justify-center hover:bg-amber-700 transition-colors">
+            <button 
+              onClick={handleWhatsAppContact}
+              className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center hover:bg-green-700 transition-colors"
+              title="Contacter via WhatsApp"
+            >
               <MessageCircle className="w-5 h-5 text-white" />
             </button>
-            <button className="w-10 h-10 bg-amber-600 rounded-full flex items-center justify-center hover:bg-amber-700 transition-colors">
+            <a 
+              href={`tel:${product.seller.phone}`}
+              className="w-10 h-10 bg-amber-600 rounded-full flex items-center justify-center hover:bg-amber-700 transition-colors"
+              title="Appeler"
+            >
               <Phone className="w-5 h-5 text-white" />
-            </button>
+            </a>
           </div>
         </div>
 
@@ -217,26 +241,27 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
               onClick={() => setShowFullDescription(!showFullDescription)}
               className="text-amber-700 font-semibold text-sm mt-1 hover:text-amber-800"
             >
-              {showFullDescription ? 'Show less' : 'Read more'}
+              {showFullDescription ? 'Voir moins' : 'Lire la suite'}
             </button>
           </div>
         </div>
 
-        {/* Sélection du poids */}
+        {/* Sélection de la taille */}
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-gray-900">Select Weight</h2>
-          <div className="flex flex-wrap gap-3">
-            {product.weightOptions.map((option) => (
+          <h2 className="text-xl font-bold text-gray-900">Choisir la taille</h2>
+          <div className="grid grid-cols-2 gap-3">
+            {product.sizeOptions.map((option) => (
               <button
                 key={option.value}
-                onClick={() => setSelectedWeight(option.value)}
-                className={`px-6 py-3 rounded-xl font-semibold transition-all ${
-                  selectedWeight === option.value
+                onClick={() => setSelectedSize(option.value)}
+                className={`p-4 rounded-xl font-semibold transition-all text-left ${
+                  selectedSize === option.value
                     ? 'bg-amber-700 text-white shadow-lg shadow-amber-700/30 scale-105'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                {option.label}
+                <div className="text-sm mb-1">{option.label}</div>
+                <div className="text-lg font-bold">{formatPrice(option.price)}</div>
               </button>
             ))}
           </div>
@@ -244,7 +269,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
 
         {/* Quantité */}
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-gray-900">Quantity</h2>
+          <h2 className="text-xl font-bold text-gray-900">Quantité</h2>
           <div className="flex items-center gap-4">
             <button
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -270,9 +295,9 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-6 safe-bottom z-30">
         <div className="flex items-center justify-between gap-4 max-w-screen-xl mx-auto">
           <div>
-            <p className="text-sm text-gray-500 mb-1">Total Price</p>
-            <p className="text-3xl font-bold text-gray-900">
-              ${totalPrice.toFixed(2)}
+            <p className="text-sm text-gray-500 mb-1">Prix Total</p>
+            <p className="text-2xl font-bold text-amber-700">
+              {formatPrice(totalPrice)}
             </p>
           </div>
 
@@ -280,13 +305,13 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
             variant="primary"
             size="lg"
             onClick={handleAddToCart}
-            className="flex-1 max-w-xs"
+            className="flex-1 max-w-xs flex items-center justify-center gap-2"
           >
             <ShoppingCart className="w-5 h-5" />
-            Add to Cart
+            Ajouter au panier
           </Button>
         </div>
       </div>
     </main>
-  );
+  )
 }
