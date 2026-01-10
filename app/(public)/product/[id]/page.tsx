@@ -44,7 +44,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
 
   // Données du produit (à remplacer par un appel API)
   const product = {
-    id: params.id,
+    id: params.id as string,
     name: 'Gâteau au Chocolat Suprême',
     category: 'Gâteaux',
     rating: 4.9,

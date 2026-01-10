@@ -199,7 +199,7 @@ export default function CartPage() {
               onClick={handleSendOrder}
               className="flex-1"
             >
-              📱 Envoyer la commande
+              Commander
             </Button>
           </div>
         </div>
