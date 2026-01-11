@@ -170,7 +170,7 @@ export default function ProfilePage() {
             <LogOut className="w-5 h-5 text-red-600" />
           </div>
 
-          <span className="flex-1 text-left font-semibold text-red-600">
+          <span className="flex-1 text-left font-semibold text-red-700">
             Logout
           </span>
 
