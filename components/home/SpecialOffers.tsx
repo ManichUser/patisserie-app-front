@@ -71,9 +71,6 @@ export function SpecialOffers() {
     <section className="px-4 mt-6 mb-8">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Offres spéciales</h2>
-        <button className="text-sm text-amber-700 hover:text-amber-800 font-medium">
-          Voir tout →
-        </button>
       </div>
 
       <Carousel

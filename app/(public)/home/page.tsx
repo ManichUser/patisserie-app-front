@@ -41,9 +41,6 @@ export default function HomePage() {
         <div className="px-4 mt-8">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold text-gray-900">Catégories</h2>
-            <button className="text-amber-700 hover:text-amber-800 font-semibold text-sm transition-colors">
-              Voir tout →
-            </button>
           </div>
           
           {/* Liste des catégories - Scrollable horizontalement */}

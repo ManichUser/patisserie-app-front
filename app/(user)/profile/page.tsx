@@ -9,13 +9,13 @@ import {
   MapPin,
   CreditCard,
   Bell,
-  Heart,
   ShoppingBag,
   HelpCircle,
   Settings,
   LogOut,
   ChevronRight,
-  Camera
+  Camera,
+  LayoutDashboard
 } from 'lucide-react';
 import { Avatar } from '@/components/ui/Avatar';
 import { BottomNav } from '@/components/layout/BottomNav';
@@ -58,18 +58,18 @@ export default function ProfilePage() {
       bgColor: 'bg-amber-50',
     },
     {
-      icon: <Heart className="w-5 h-5" />,
-      label: 'Favorites',
-      path: '/favorites',
-      color: 'text-red-600',
-      bgColor: 'bg-red-50',
-    },
-    {
       icon: <Bell className="w-5 h-5" />,
       label: 'Notifications',
       path: '/profile/notifications',
       color: 'text-indigo-600',
       bgColor: 'bg-indigo-50',
+    },
+    {
+      icon: <LayoutDashboard className="w-5 h-5" />,
+      label: 'Gerer ma Boutique ',
+      path: '/dashboard',
+      color: 'text-red-600',
+      bgColor: 'bg-red-50',
     },
     {
       icon: <Settings className="w-5 h-5" />,

@@ -34,14 +34,14 @@ export default function ExplorePage() {
   return (
     <main className="min-h-screen bg-gray-50 pb-24">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="px-6 pt-6 pb-4 space-y-4">
           {/* Location */}
           <div className="flex items-center justify-between">
             <button className="flex items-center gap-2 text-sm">
               <MapPin className="w-5 h-5 text-amber-600" />
-              <span className="font-semibold text-gray-900">Livrer à</span>
-              <span className="text-gray-600">Yaoundé</span>
+              <span className="font-semibold text-gray-900">Localisé à</span>
+              <span className="text-gray-600">Ndogpassi 1er Danger</span>
               <ChevronDown className="w-4 h-4 text-gray-600" />
             </button>
           </div>
@@ -79,9 +79,6 @@ export default function ExplorePage() {
         <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold text-gray-900">Catégories</h2>
-            <button className="text-amber-700 font-semibold text-sm hover:text-amber-800 transition-colors">
-              Voir tout →
-            </button>
           </div>
 
           <div className="flex gap-3 overflow-x-auto pb-2 -mx-6 px-6 scrollbar-hide">
@@ -110,9 +107,6 @@ export default function ExplorePage() {
                 <h2 className="text-xl font-bold text-gray-900">Spéciaux du jour 🌟</h2>
                 <p className="text-sm text-gray-600 mt-1">Fraîchement préparés pour vous</p>
               </div>
-              <button className="text-amber-700 font-semibold text-sm hover:text-amber-800 transition-colors">
-                Voir tout →
-              </button>
             </div>
 
             <div className="flex gap-4 overflow-x-auto pb-2 -mx-6 px-6 scrollbar-hide">
@@ -170,7 +164,7 @@ export default function ExplorePage() {
                 Aucun produit trouvé
               </h3>
               <p className="text-gray-600 mb-4">
-                {searchQuery 
+                {searchQuery
                   ? `Aucun résultat pour "${searchQuery}"`
                   : 'Essayez une autre catégorie'}
               </p>

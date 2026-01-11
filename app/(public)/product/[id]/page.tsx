@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/Button3'
 import { formatPrice } from '@/lib/constants'
+import React from 'react'
 
 // Types
 interface ProductImage {
@@ -34,7 +35,7 @@ interface Seller {
   phone: string
 }
 
-export default function ProductDetailPage({ params }: { params: { id: string } }) {
+export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter()
   const [isFavorite, setIsFavorite] = useState(false)
   const [selectedImage, setSelectedImage] = useState(0)
@@ -44,7 +45,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
 
   // Données du produit (à remplacer par un appel API)
   const product = {
-    id: params.id as string,
+    id: React.use(params) ,
     name: 'Gâteau au Chocolat Suprême',
     category: 'Gâteaux',
     rating: 4.9,
@@ -125,7 +126,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
               />
             </button>
 
-            <button 
+            <button
               onClick={handleShare}
               className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-50 transition-all active:scale-95"
             >
@@ -135,12 +136,12 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
         </div>
 
         {/* Image principale */}
-        <div className="relative w-full h-full flex items-center justify-center">
-          <div className="relative w-full aspect-square">
+        <div className=" relative w-full h-full flex items-center justify-center">
+          <div className="absolute inset-0 top-0 left-0 right-0 w-full aspect-square">
             <img
               src={product.images[selectedImage]?.url || '/logo.png'}
               alt={product.images[selectedImage]?.alt || product.name}
-              className="w-full h-full object-cover drop-shadow-2xl"
+              className="w-full h-full  object-cover drop-shadow-2xl"
             />
           </div>
         </div>
