@@ -43,7 +43,7 @@ export const BottomNav: React.FC = () => {
       id: 'profile',
       label: 'Profile',
       icon: <User className="w-6 h-6" />,
-      path: '/profile',
+      path: '/user/profile',
     },
   ];
 

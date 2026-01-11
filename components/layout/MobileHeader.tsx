@@ -21,7 +21,7 @@ export function MobileHeader({ onSearch }: MobileHeaderProps) {
         </div>
 
         <div className="flex gap-3">
-          <Link href="/cart" className="bg-white p-2 rounded-lg">
+          <Link href="/user/cart" className="bg-white p-2 rounded-lg">
             <ShoppingCart className="w-6 h-6 text-amber-950" />
           </Link>
           <Link href="/profile/notifications" className="bg-white p-2 rounded-lg">
