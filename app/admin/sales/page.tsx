@@ -163,7 +163,7 @@ export default function AdminSalesPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="w-12 h-12 border-4 border-amber-700 border-t-transparent rounded-full animate-spin" />
+        <div className="w-12 h-12 border-4 border-blue-700 border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -185,7 +185,7 @@ export default function AdminSalesPage() {
               <select
                 value={period}
                 onChange={(e) => setPeriod(e.target.value)}
-                className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700 text-sm"
+                className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700 text-sm"
               >
                 <option value="week">Cette semaine</option>
                 <option value="month">Ce mois</option>
@@ -194,7 +194,7 @@ export default function AdminSalesPage() {
 
               <button
                 onClick={exportData}
-                className="flex items-center gap-2 bg-amber-700 text-white px-4 py-2 rounded-lg hover:bg-amber-800 transition-colors text-sm font-medium"
+                className="flex items-center gap-2 bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors text-sm font-medium"
               >
                 <Download className="w-4 h-4" />
                 <span className="hidden sm:inline">Exporter</span>
@@ -214,7 +214,7 @@ export default function AdminSalesPage() {
                 onClick={() => setSelectedTab(tab.id)}
                 className={`px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap transition-all ${
                   selectedTab === tab.id
-                    ? 'bg-amber-700 text-white'
+                    ? 'bg-blue-700 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
@@ -344,8 +344,8 @@ export default function AdminSalesPage() {
                 ].map((product, index) => (
                   <div key={index} className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
-                        <span className="font-bold text-amber-700 text-sm">
+                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <span className="font-bold text-blue-700 text-sm">
                           #{index + 1}
                         </span>
                       </div>
@@ -374,7 +374,7 @@ export default function AdminSalesPage() {
               <select
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
-                className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700 text-sm"
+                className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700 text-sm"
               >
                 <option value="all">Toutes les ventes</option>
                 <option value="negotiated">Ventes négociées</option>
@@ -495,7 +495,7 @@ export default function AdminSalesPage() {
                     </div>
                     <div className="w-full bg-gray-100 rounded-full h-2">
                       <div
-                        className="bg-amber-600 h-2 rounded-full transition-all"
+                        className="bg-blue-600 h-2 rounded-full transition-all"
                         style={{
                           width: `${(day.revenue / Math.max(...trends.map(t => t.revenue))) * 100}%`,
                         }}

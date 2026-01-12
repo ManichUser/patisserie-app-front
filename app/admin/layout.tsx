@@ -18,7 +18,8 @@ import {
   Grid3x3,
   LogOut,
   Bell,
-  Home
+  Home,
+  LayoutDashboardIcon
 } from 'lucide-react'
 
 export default function AdminLayout({
@@ -64,17 +65,17 @@ export default function AdminLayout({
               )}
             </button>
             <Link href="/admin/dashboard" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-amber-700 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold">🍰</span>
+              <div className="w-8 h-8 bg-blue-700 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold"><LayoutDashboardIcon /></span>
               </div>
               <span className="font-bold text-gray-900">Admin</span>
             </Link>
           </div>
 
-          <button className="relative p-2 rounded-lg hover:bg-gray-100">
+          <Link href="/user/profile/notifications" className="relative p-2 rounded-lg hover:bg-gray-100">
             <Bell className="w-5 h-5 text-gray-700" />
             <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-          </button>
+          </Link>
         </div>
       </header>
 
@@ -84,8 +85,8 @@ export default function AdminLayout({
           {/* Logo */}
           <div className="p-6 border-b">
             <Link href="/admin/dashboard" className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-amber-700 rounded-xl flex items-center justify-center">
-                <span className="text-2xl">🍰</span>
+              <div className="w-10 h-10 bg-blue-700 rounded-xl flex items-center justify-center">
+                <span className="text-2xl"><LayoutDashboardIcon /></span>
               </div>
               <div>
                 <p className="font-bold text-gray-900">Force des Saveurs</p>
@@ -106,11 +107,11 @@ export default function AdminLayout({
                       href={item.href}
                       className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
                         active
-                          ? 'bg-amber-50 text-amber-700 font-semibold'
+                          ? 'bg-blue-50 text-blue-700 font-semibold'
                           : 'text-gray-700 hover:bg-gray-50'
                       }`}
                     >
-                      <Icon className={`w-5 h-5 ${active ? 'text-amber-700' : 'text-gray-500'}`} />
+                      <Icon className={`w-5 h-5 ${active ? 'text-blue-700' : 'text-gray-500'}`} />
                       <span className="text-sm">{item.name}</span>
                     </Link>
                   </li>
@@ -153,7 +154,7 @@ export default function AdminLayout({
               {/* Logo */}
               <div className="p-6 border-b">
                 <Link href="/admin/dashboard" className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-amber-700 rounded-xl flex items-center justify-center">
+                  <div className="w-10 h-10 bg-blue-700 rounded-xl flex items-center justify-center">
                     <span className="text-2xl">🍰</span>
                   </div>
                   <div>
@@ -176,11 +177,11 @@ export default function AdminLayout({
                           onClick={() => setSidebarOpen(false)}
                           className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
                             active
-                              ? 'bg-amber-50 text-amber-700 font-semibold'
+                              ? 'bg-blue-50 text-blue-700 font-semibold'
                               : 'text-gray-700 hover:bg-gray-50'
                           }`}
                         >
-                          <Icon className={`w-5 h-5 ${active ? 'text-amber-700' : 'text-gray-500'}`} />
+                          <Icon className={`w-5 h-5 ${active ? 'text-blue-700' : 'text-gray-500'}`} />
                           <span className="text-sm">{item.name}</span>
                         </Link>
                       </li>

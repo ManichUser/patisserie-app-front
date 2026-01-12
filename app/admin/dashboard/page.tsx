@@ -143,7 +143,7 @@ export default function AdminDashboard() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="w-12 h-12 border-4 border-amber-700 border-t-transparent rounded-full animate-spin" />
+        <div className="w-12 h-12 border-4 border-blue-700 border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -151,9 +151,9 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
       {/* Header */}
-      <div className="bg-gradient-to-r from-amber-600 to-amber-700 text-white p-6">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6">
         <h1 className="text-2xl font-bold mb-2">Tableau de bord</h1>
-        <p className="text-amber-100">Vue d'ensemble de votre boutique</p>
+        <p className="text-blue-100">Vue d'ensemble de votre boutique</p>
       </div>
 
       <div className="p-4 md:p-6 space-y-6">
@@ -253,12 +253,12 @@ export default function AdminDashboard() {
           <div className="bg-white rounded-xl shadow-sm overflow-hidden">
             <div className="p-4 border-b flex items-center justify-between">
               <h2 className="font-bold text-gray-900 flex items-center gap-2">
-                <AlertCircle className="w-5 h-5 text-amber-600" />
+                <AlertCircle className="w-5 h-5 text-blue-600" />
                 Recommandations
               </h2>
               <Link
                 href="/admin/recommendations"
-                className="text-sm text-amber-700 hover:text-amber-800 font-medium"
+                className="text-sm text-blue-700 hover:text-blue-800 font-medium"
               >
                 Voir tout →
               </Link>
@@ -289,7 +289,7 @@ export default function AdminDashboard() {
             <h2 className="font-bold text-gray-900">Commandes récentes</h2>
             <Link
               href="/admin/orders"
-              className="text-sm text-amber-700 hover:text-amber-800 font-medium"
+              className="text-sm text-blue-700 hover:text-blue-800 font-medium"
             >
               Voir tout →
             </Link>
@@ -309,7 +309,7 @@ export default function AdminDashboard() {
                   {getStatusBadge(order.status)}
                 </div>
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-bold text-amber-700">
+                  <p className="text-sm font-bold text-blue-700">
                     {formatPrice(order.total)}
                   </p>
                   <p className="text-xs text-gray-500">
@@ -327,7 +327,7 @@ export default function AdminDashboard() {
             href="/admin/products/new"
             className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all text-center"
           >
-            <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-2">
               <Package className="w-6 h-6 text-amber-700" />
             </div>
             <p className="font-semibold text-gray-900">Nouveau produit</p>

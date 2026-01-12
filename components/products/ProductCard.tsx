@@ -4,18 +4,9 @@ import { Heart, ShoppingCart, Star, ThumbsUp } from 'lucide-react'
 import { useState } from 'react'
 import { formatPrice } from '@/lib/constants'
 import Link from 'next/link'
+import { ProductCardProps } from '@/lib/types'
 
-interface ProductCardProps {
-  id: string
-  name: string
-  category: string
-  price: number
-  image: string
-  rating: number
-  popular?: boolean
-  description?: string
-  stock?: number
-}
+
 
 export function ProductCard({
   id,

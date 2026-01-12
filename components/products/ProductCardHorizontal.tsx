@@ -46,7 +46,7 @@ export const ProductCardHorizontal: React.FC<ProductCardHorizontalProps> = ({
       )}
     >
       {/* Image */}
-      <div className="relative w-24 h-24 flex-shrink-0 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden">
+      <div className="relative w-24 h-24 shrink-0 bg-linear-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden">
         <Image
           src={image}
           alt={name}

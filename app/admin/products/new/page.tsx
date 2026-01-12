@@ -238,7 +238,7 @@ export default function NewProductPage() {
                     onClick={() => setFeaturedImage(index)}
                     className={`px-3 py-1 rounded-lg text-xs font-medium ${
                       img.isFeatured
-                        ? 'bg-amber-600 text-white'
+                        ? 'bg-blue-600 text-white'
                         : 'bg-white text-gray-700'
                     }`}
                   >
@@ -254,7 +254,7 @@ export default function NewProductPage() {
                 </div>
 
                 {img.isFeatured && (
-                  <span className="absolute top-2 left-2 bg-amber-600 text-white text-xs px-2 py-1 rounded-full font-semibold">
+                  <span className="absolute top-2 left-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full font-semibold">
                     Principal
                   </span>
                 )}
@@ -262,7 +262,7 @@ export default function NewProductPage() {
             ))}
 
             {/* Upload button */}
-            <label className="aspect-square border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-amber-600 hover:bg-amber-50 transition-colors">
+            <label className="aspect-square border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-blue-600 hover:bg-blue-50 transition-colors">
               <input
                 type="file"
                 accept="image/*"
@@ -295,7 +295,7 @@ export default function NewProductPage() {
               value={formData.name}
               onChange={handleChange}
               placeholder="Ex: Gâteau au Chocolat Suprême"
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700 ${
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700 ${
                 errors.name ? 'border-red-500' : ''
               }`}
             />
@@ -315,7 +315,7 @@ export default function NewProductPage() {
               onChange={handleChange}
               rows={4}
               placeholder="Décrivez votre produit..."
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700"
             />
           </div>
 
@@ -328,7 +328,7 @@ export default function NewProductPage() {
               name="categoryId"
               value={formData.categoryId}
               onChange={handleChange}
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700 ${
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700 ${
                 errors.categoryId ? 'border-red-500' : ''
               }`}
             >
@@ -353,7 +353,7 @@ export default function NewProductPage() {
               value={formData.sku}
               onChange={handleChange}
               placeholder="Ex: GAT-CHOC-001"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700"
             />
           </div>
         </div>
@@ -376,7 +376,7 @@ export default function NewProductPage() {
                 placeholder="8500"
                 min="0"
                 step="100"
-                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700 ${
+                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700 ${
                   errors.price ? 'border-red-500' : ''
                 }`}
               />
@@ -398,7 +398,7 @@ export default function NewProductPage() {
                 placeholder="4000"
                 min="0"
                 step="100"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700"
               />
               <p className="text-xs text-gray-500 mt-1">
                 Pour calculer votre marge automatiquement
@@ -434,7 +434,7 @@ export default function NewProductPage() {
                 onChange={handleChange}
                 placeholder="10"
                 min="0"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700"
               />
             </div>
 
@@ -449,7 +449,7 @@ export default function NewProductPage() {
                 value={formData.lowStockThreshold}
                 onChange={handleChange}
                 min="0"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700"
               />
               <p className="text-xs text-gray-500 mt-1">
                 Alerte quand le stock descend en dessous
@@ -464,7 +464,7 @@ export default function NewProductPage() {
               name="available"
               checked={formData.available}
               onChange={handleChange}
-              className="w-4 h-4 text-amber-700 rounded focus:ring-amber-700"
+              className="w-4 h-4 text-blue-700 rounded focus:ring-blue-700"
             />
             <span className="text-sm text-gray-700">Produit disponible à la vente</span>
           </label>
@@ -488,7 +488,7 @@ export default function NewProductPage() {
                 placeholder="1.5"
                 step="0.1"
                 min="0"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700"
               />
             </div>
 
@@ -504,7 +504,7 @@ export default function NewProductPage() {
                 onChange={handleChange}
                 placeholder="8"
                 min="1"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700"
               />
             </div>
 
@@ -520,7 +520,7 @@ export default function NewProductPage() {
                 onChange={handleChange}
                 placeholder="30"
                 min="0"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700"
               />
             </div>
           </div>
@@ -536,7 +536,7 @@ export default function NewProductPage() {
               onChange={handleChange}
               rows={3}
               placeholder="Farine, sucre, chocolat noir, œufs, beurre..."
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700"
             />
           </div>
 
@@ -553,7 +553,7 @@ export default function NewProductPage() {
                   onClick={() => handleAllergenToggle(allergen)}
                   className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
                     formData.allergens.includes(allergen)
-                      ? 'bg-amber-600 text-white'
+                      ? 'bg-blue-600 text-white'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
@@ -580,7 +580,7 @@ export default function NewProductPage() {
                 onChange={handleChange}
                 placeholder="350"
                 min="0"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700"
               />
             </div>
 
@@ -596,7 +596,7 @@ export default function NewProductPage() {
                 placeholder="5"
                 min="0"
                 step="0.1"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700"
               />
             </div>
 
@@ -612,7 +612,7 @@ export default function NewProductPage() {
                 placeholder="45"
                 min="0"
                 step="0.1"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700"
               />
             </div>
 
@@ -628,7 +628,7 @@ export default function NewProductPage() {
                 placeholder="15"
                 min="0"
                 step="0.1"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700"
               />
             </div>
           </div>
@@ -646,7 +646,7 @@ export default function NewProductPage() {
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 flex items-center justify-center gap-2 bg-amber-700 text-white px-6 py-3 rounded-lg hover:bg-amber-800 transition-colors disabled:opacity-50 font-medium"
+            className="flex-1 flex items-center justify-center gap-2 bg-blue-700 text-white px-6 py-3 rounded-lg hover:bg-blue-800 transition-colors disabled:opacity-50 font-medium"
           >
             {loading ? (
               <>

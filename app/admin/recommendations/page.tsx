@@ -212,7 +212,7 @@ export default function AdminRecommendationsPage() {
       MARKETING: 'bg-purple-100 text-purple-700',
       CUSTOMER_RETENTION: 'bg-orange-100 text-orange-700',
       COST_REDUCTION: 'bg-red-100 text-red-700',
-      PROMOTION: 'bg-amber-100 text-amber-700',
+      PROMOTION: 'bg-blue-100 text-blue-700',
     }
     return colors[type as keyof typeof colors] || 'bg-gray-100 text-gray-700'
   }
@@ -240,7 +240,7 @@ export default function AdminRecommendationsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="w-12 h-12 border-4 border-amber-700 border-t-transparent rounded-full animate-spin" />
+        <div className="w-12 h-12 border-4 border-blue-700 border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -253,7 +253,7 @@ export default function AdminRecommendationsPage() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
             <div>
               <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                <Sparkles className="w-6 h-6 text-amber-600" />
+                <Sparkles className="w-6 h-6 text-blue-600" />
                 Recommandations IA
               </h1>
               <p className="text-sm text-gray-600 mt-1">
@@ -264,7 +264,7 @@ export default function AdminRecommendationsPage() {
             <button
               onClick={generateRecommendations}
               disabled={generating}
-              className="flex items-center gap-2 bg-amber-700 text-white px-4 py-2 rounded-lg hover:bg-amber-800 transition-colors disabled:opacity-50 font-medium"
+              className="flex items-center gap-2 bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors disabled:opacity-50 font-medium"
             >
               <RefreshCw className={`w-5 h-5 ${generating ? 'animate-spin' : ''}`} />
               {generating ? 'Génération...' : 'Régénérer'}
@@ -304,7 +304,7 @@ export default function AdminRecommendationsPage() {
                 onClick={() => setFilter(f.id)}
                 className={`px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap transition-all ${
                   filter === f.id
-                    ? 'bg-amber-700 text-white'
+                    ? 'bg-blue-700 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
@@ -364,7 +364,7 @@ export default function AdminRecommendationsPage() {
                     <ul className="space-y-2">
                       {rec.suggestedActions.map((action, index) => (
                         <li key={index} className="flex items-start gap-2 text-sm text-gray-700">
-                          <CheckCircle className="w-4 h-4 text-amber-600 mt-0.5 shrink-0" />
+                          <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 shrink-0" />
                           <span>{action}</span>
                         </li>
                       ))}

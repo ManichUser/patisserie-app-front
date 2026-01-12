@@ -160,7 +160,7 @@ export default function AdminProductsPage() {
             </div>
             <Link
               href="/admin/products/new"
-              className="flex items-center gap-2 bg-amber-700 text-white px-4 py-2 rounded-lg hover:bg-amber-800 transition-colors font-medium"
+              className="flex items-center gap-2 bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors font-medium"
             >
               <Plus className="w-5 h-5" />
               <span className="hidden sm:inline">Nouveau</span>
@@ -176,14 +176,14 @@ export default function AdminProductsPage() {
                 placeholder="Rechercher un produit..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700"
+                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700"
               />
             </div>
 
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700"
+              className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700"
             >
               <option value="all">Tous</option>
               <option value="available">Disponibles</option>
@@ -193,7 +193,7 @@ export default function AdminProductsPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-700"
+              className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700"
             >
               <option value="recent">Plus récents</option>
               <option value="name">Nom (A-Z)</option>
@@ -208,14 +208,14 @@ export default function AdminProductsPage() {
       <div className="p-4 md:p-6">
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <div className="w-12 h-12 border-4 border-amber-700 border-t-transparent rounded-full animate-spin" />
+            <div className="w-12 h-12 border-4 border-blue-700 border-t-transparent rounded-full animate-spin" />
           </div>
         ) : filteredProducts.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-gray-500 mb-4">Aucun produit trouvé</p>
             <Link
               href="/admin/products/new"
-              className="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 font-medium"
+              className="inline-flex items-center gap-2 text-blue-700 hover:text-blue-800 font-medium"
             >
               <Plus className="w-5 h-5" />
               Ajouter un produit
@@ -272,7 +272,7 @@ export default function AdminProductsPage() {
                   {/* Price & Margin */}
                   <div className="flex items-center justify-between mb-3">
                     <div>
-                      <p className="text-lg font-bold text-amber-700">
+                      <p className="text-lg font-bold text-blue-700">
                         {formatPrice(product.price)}
                       </p>
                       {product.costPrice && (
@@ -315,7 +315,7 @@ export default function AdminProductsPage() {
                     </button>
                     <Link
                       href={`/admin/products/${product.id}/edit`}
-                      className="flex-1 flex items-center justify-center gap-1 bg-amber-50 text-amber-700 py-2 px-3 rounded-lg hover:bg-amber-100 transition-colors text-sm font-medium"
+                      className="flex-1 flex items-center justify-center gap-1 bg-blue-50 text-blue-700 py-2 px-3 rounded-lg hover:bg-blue-100 transition-colors text-sm font-medium"
                     >
                       <Edit className="w-4 h-4" />
                       <span className="hidden sm:inline">Modifier</span>

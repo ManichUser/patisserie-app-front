@@ -11,13 +11,17 @@ import {
   Package,
   Clock,
   CheckCircle,
-  XCircle,
+
   Truck,
   MessageCircle,
-  Eye,
-} from 'lucide-react'
 
-export default function OrderDetailPage({ params }: { params: { id: string } }) {
+} from 'lucide-react'
+import { formatPrice } from '@/lib/constants'
+import { formatDate } from '@/lib/utils'
+import React from 'react'
+
+export default function OrderDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = React.use(params)
   const router = useRouter()
   const [order, setOrder] = useState<any>(null)
   const [loading, setLoading] = useState(true)
@@ -25,7 +29,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
 
   useEffect(() => {
     fetchOrder()
-  }, [params.id])
+  }, [id])
 
   const fetchOrder = async () => {
     try {
@@ -34,7 +38,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
 
       // Mock data
       setOrder({
-        id: params.id,
+        id,
         orderNumber: 'CMD-001',
         user: {
           id: 'u1',
@@ -118,19 +122,9 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
     window.open(url, '_blank')
   }
 
-  const formatPrice = (price: number) => {
-    return `${price.toLocaleString('fr-FR')} FCFA`
-  }
 
-  const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleString('fr-FR', {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    })
-  }
+
+
 
   const getStatusLabel = (status: string) => {
     const labels: Record<string, string> = {
@@ -144,6 +138,39 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
     return labels[status] || status
   }
 
+  const statusStyles: Record<string, { current: string; active: string; line: string; button: string }> = {
+    yellow: {
+      current: 'bg-yellow-600 text-white ring-4 ring-yellow-300',
+      active: 'bg-yellow-100 text-yellow-700',
+      line: 'bg-yellow-400',
+      button: 'bg-yellow-100 text-yellow-700',
+    },
+    blue: {
+      current: 'bg-blue-600 text-white ring-4 ring-blue-300',
+      active: 'bg-blue-100 text-blue-700',
+      line: 'bg-blue-400',
+      button: 'bg-blue-100 text-blue-700',
+    },
+    purple: {
+      current: 'bg-purple-600 text-white ring-4 ring-purple-300',
+      active: 'bg-purple-100 text-purple-700',
+      line: 'bg-purple-400',
+      button: 'bg-purple-100 text-purple-700',
+    },
+    green: {
+      current: 'bg-green-600 text-white ring-4 ring-green-300',
+      active: 'bg-green-100 text-green-700',
+      line: 'bg-green-400',
+      button: 'bg-green-100 text-green-700',
+    },
+    gray: {
+      current: 'bg-gray-600 text-white ring-4 ring-gray-300',
+      active: 'bg-gray-100 text-gray-700',
+      line: 'bg-gray-400',
+      button: 'bg-gray-100 text-gray-700',
+    },
+  }
+
   const statusFlow = [
     { value: 'PENDING', label: 'En attente', icon: Clock, color: 'yellow' },
     { value: 'CONFIRMED', label: 'Confirmer', icon: CheckCircle, color: 'blue' },
@@ -155,7 +182,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="w-12 h-12 border-4 border-amber-700 border-t-transparent rounded-full animate-spin" />
+        <div className="w-12 h-12 border-4 border-blue-700 border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -164,7 +191,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
     return (
       <div className="flex flex-col items-center justify-center h-screen">
         <p className="text-gray-500 mb-4">Commande introuvable</p>
-        <Link href="/admin/orders" className="text-amber-700 hover:text-amber-800">
+        <Link href="/admin/orders" className="text-blue-700 hover:text-blue-800">
           Retour aux commandes
         </Link>
       </div>
@@ -222,14 +249,14 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
               const isCurrent = s.value === order.status
               
               return (
-                <div key={s.value} className="flex items-center">
+                <div key={s.value} className="flex flex-wrap gap-1 items-center">
                   <div className="flex flex-col items-center">
                     <div
                       className={`w-10 h-10 rounded-full flex items-center justify-center ${
                         isCurrent
-                          ? `bg-${s.color}-600 text-white ring-4 ring-${s.color}-100`
+                          ? statusStyles[s.color].current
                           : isActive
-                          ? `bg-${s.color}-100 text-${s.color}-700`
+                          ? statusStyles[s.color].active
                           : 'bg-gray-100 text-gray-400'
                       }`}
                     >
@@ -242,7 +269,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
                   {index < statusFlow.length - 1 && (
                     <div
                       className={`h-0.5 w-8 mx-2 ${
-                        isActive ? `bg-${s.color}-400` : 'bg-gray-200'
+                        isActive ? statusStyles[s.color].line : 'bg-gray-200'
                       }`}
                     />
                   )}
@@ -260,7 +287,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
                 disabled={updating || order.status === s.value}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   order.status === s.value
-                    ? `bg-${s.color}-100 text-${s.color}-700 cursor-default`
+                    ? `${statusStyles[s.color].button} cursor-default`
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 } disabled:opacity-50`}
               >
@@ -303,7 +330,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
                 </p>
               )}
               {order.deliveryInstructions && (
-                <p className="text-xs text-amber-700 mt-1 bg-amber-50 p-2 rounded">
+                <p className="text-xs text-blue-700 mt-1 bg-blue-50 p-2 rounded">
                   💬 {order.deliveryInstructions}
                 </p>
               )}
@@ -341,7 +368,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
                     {item.quantity} × {formatPrice(item.price)}
                   </p>
                   {item.note && (
-                    <p className="text-xs text-amber-700 mt-1 bg-amber-50 px-2 py-1 rounded">
+                    <p className="text-xs text-blue-700 mt-1 bg-blue-50 px-2 py-1 rounded">
                       Note: {item.note}
                     </p>
                   )}
@@ -384,7 +411,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
 
             <div className="pt-3 border-t flex items-center justify-between">
               <span className="text-lg font-bold text-gray-900">Total</span>
-              <span className="text-2xl font-bold text-amber-700">
+              <span className="text-2xl font-bold text-blue-700">
                 {formatPrice(order.total)}
               </span>
             </div>
