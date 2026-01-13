@@ -54,11 +54,11 @@ export default function AccountingPage() {
   } = useAccounting(period);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen max-w-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-30 shadow-sm">
+      <div className="bg-white  border-b border-gray-200 sticky top-0 z-30 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="py-4 flex items-center justify-between">
+          <div className="py-4 flex-col items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Comptabilité</h1>
               <p className="text-sm text-gray-600 mt-0.5">
@@ -66,7 +66,7 @@ export default function AccountingPage() {
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <select
                 value={period}
                 onChange={(e) => setPeriod(e.target.value)}
