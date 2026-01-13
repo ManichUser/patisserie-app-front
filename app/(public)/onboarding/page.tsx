@@ -65,7 +65,7 @@ export default function OnboardingPage() {
       </div>
 
       {/* Navigation */}
-      <div className="p-6 fixed bottom-0 w-screen space-y-6 ">
+      <div className="p-6 fixed mt-4 bottom-0 w-screen space-y-6 ">
         {/* Dots indicator */}
         <div className="flex justify-center">
           <OnboardingDots

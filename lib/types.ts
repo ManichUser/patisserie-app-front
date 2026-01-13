@@ -80,3 +80,61 @@ export interface ProductCardProps {
   description?: string
   stock?: number
 }
+
+export interface StatCardProps {
+  label: string;
+  value: number;
+  variant?: 'default' | 'primary' | 'success' | 'warning';
+}
+
+export interface SpecialOffer {
+  id: string;
+  title: string;
+  description?: string;
+  type: string;
+  image?: string;
+  badge?: string;
+  discountType: string;
+  discountValue: number;
+  minPurchase?: number;
+  maxDiscount?: number;
+  startDate: string;
+  endDate: string;
+  usageLimit?: number;
+  usageCount: number;
+  isActive: boolean;
+  productIds: string[];
+  categoryIds: string[];
+}
+
+export interface OfferCardProps {
+  offer: SpecialOffer;
+  onEdit: (offer: SpecialOffer) => void;
+  onDelete: (id: string) => void;
+  onToggleActive: (id: string) => void;
+  onDuplicate?: (offer: SpecialOffer) => void;
+}
+export interface OfferFormData {
+  title: string;
+  description: string;
+  type: string;
+  badge: string;
+  discountType: string;
+  discountValue: string;
+  minPurchase: string;
+  maxDiscount: string;
+  startDate: string;
+  endDate: string;
+  usageLimit: string;
+  limitPerUser: string;
+  isActive: boolean;
+  productIds: string[];
+  categoryIds: string[];
+}
+
+export interface OfferModalProps {
+  isOpen: boolean;
+  offer?: any;
+  onClose: () => void;
+  onSave: (data: OfferFormData) => Promise<void>;
+}

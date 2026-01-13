@@ -1,8 +1,8 @@
-// app/admin/products/new/page.tsx
+// app/admin/products/[id]/edit/page.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { ArrowLeft, Save, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { ImageSection } from '@/components/admin/products/ImageSection';
@@ -13,9 +13,12 @@ import { ProductDetailsSection } from '@/components/admin/products/ProductDetail
 import { NutritionSection } from '@/components/admin/products/NutritionSection';
 
 interface ProductImage {
+  id?: string;
+  url?: string;
   file?: File;
   preview: string;
   isFeatured: boolean;
+  order?: number;
 }
 
 interface Category {
@@ -23,9 +26,13 @@ interface Category {
   name: string;
 }
 
-export default function NewProductPage() {
+export default function EditProductPage() {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const params = useParams();
+  const productId = params.id as string;
+
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [images, setImages] = useState<ProductImage[]>([]);
   
@@ -36,7 +43,7 @@ export default function NewProductPage() {
     compareAtPrice: '',
     costPrice: '',
     categoryId: '',
-    stock: '0',
+    stock: '',
     lowStockThreshold: '5',
     sku: '',
     weight: '',
@@ -55,7 +62,8 @@ export default function NewProductPage() {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+    fetchProduct();
+  }, [productId]);
 
   const fetchCategories = async () => {
     try {
@@ -64,14 +72,56 @@ export default function NewProductPage() {
       setCategories(data.data || []);
     } catch (error) {
       console.error('Erreur chargement catégories:', error);
-      // Fallback mock data
-      setCategories([
-        { id: '1', name: 'Gâteaux' },
-        { id: '2', name: 'Cupcakes' },
-        { id: '3', name: 'Tartes' },
-        { id: '4', name: 'Viennoiseries' },
-        { id: '5', name: 'Macarons' },
-      ]);
+    }
+  };
+
+  const fetchProduct = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/products/${productId}`);
+      const product = await response.json();
+
+      // Remplir le formulaire
+      setFormData({
+        name: product.name || '',
+        description: product.description || '',
+        price: product.price?.toString() || '',
+        compareAtPrice: product.compareAtPrice?.toString() || '',
+        costPrice: product.costPrice?.toString() || '',
+        categoryId: product.categoryId || '',
+        stock: product.stock?.toString() || '0',
+        lowStockThreshold: product.lowStockThreshold?.toString() || '5',
+        sku: product.sku || '',
+        weight: product.weight?.toString() || '',
+        servings: product.servings?.toString() || '',
+        prepTime: product.prepTime?.toString() || '',
+        ingredients: product.ingredients || '',
+        allergens: product.allergens || [],
+        calories: product.calories?.toString() || '',
+        protein: product.protein?.toString() || '',
+        carbs: product.carbs?.toString() || '',
+        fat: product.fat?.toString() || '',
+        available: product.available ?? true,
+      });
+
+      // Charger les images
+      if (product.media && product.media.length > 0) {
+        setImages(
+          product.media.map((media: any) => ({
+            id: media.id,
+            url: media.url,
+            preview: media.url,
+            isFeatured: media.isFeatured,
+            order: media.order,
+          }))
+        );
+      }
+    } catch (error) {
+      console.error('Erreur chargement produit:', error);
+      alert('Erreur lors du chargement du produit');
+    //   router.push('/admin/products');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -135,49 +185,50 @@ export default function NewProductPage() {
       return;
     }
 
-    setLoading(true);
+    setSaving(true);
 
     try {
-      // 1. Upload images
-      const uploadedImages: any[] = [];
-      
-      if (images.length > 0) {
-        const formDataUpload = new FormData();
-        images.forEach((img, index) => {
-          if (img.file) {
-            formDataUpload.append('images', img.file);
-          }
-        });
+      // 1. Upload new images if any
+      const newImages = images.filter(img => img.file);
+      let uploadedImages: any[] = [];
 
-        // TODO: Implement actual upload
-        // const uploadRes = await fetch('/api/upload', {
-        //   method: 'POST',
-        //   body: formDataUpload,
+      if (newImages.length > 0) {
+        // TODO: Upload images to cloud storage
+        // const formData = new FormData();
+        // newImages.forEach((img, index) => {
+        //   if (img.file) formData.append(`images`, img.file);
         // });
+        // const uploadRes = await fetch('/api/upload', { method: 'POST', body: formData });
         // uploadedImages = await uploadRes.json();
-        
-        // Mock uploaded images
-        uploadedImages.push(
-          ...images.map((img, index) => ({
-            url: img.preview,
-            publicId: `product_${Date.now()}_${index}`,
-            isFeatured: img.isFeatured,
-            order: index,
-            type: 'IMAGE',
-          }))
-        );
       }
 
-      // 2. Create product
-      const response = await fetch('/api/products', {
-        method: 'POST',
+      // 2. Prepare media array
+      const existingImages = images.filter(img => img.id);
+      const mediaToSave = [
+        ...existingImages.map((img, index) => ({
+          id: img.id,
+          url: img.url,
+          isFeatured: img.isFeatured,
+          order: index,
+        })),
+        ...uploadedImages.map((img: any, index: number) => ({
+          url: img.url,
+          publicId: img.publicId,
+          isFeatured: existingImages.length === 0 && index === 0,
+          order: existingImages.length + index,
+        })),
+      ];
+
+      // 3. Update product
+      const response = await fetch(`/api/products/${productId}`, {
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
           price: parseFloat(formData.price),
           compareAtPrice: formData.compareAtPrice ? parseFloat(formData.compareAtPrice) : null,
           costPrice: formData.costPrice ? parseFloat(formData.costPrice) : null,
-          stock: parseInt(formData.stock) || 0,
+          stock: formData.stock ? parseInt(formData.stock) : 0,
           lowStockThreshold: parseInt(formData.lowStockThreshold) || 5,
           weight: formData.weight ? parseFloat(formData.weight) : null,
           servings: formData.servings ? parseInt(formData.servings) : null,
@@ -186,26 +237,35 @@ export default function NewProductPage() {
           protein: formData.protein ? parseFloat(formData.protein) : null,
           carbs: formData.carbs ? parseFloat(formData.carbs) : null,
           fat: formData.fat ? parseFloat(formData.fat) : null,
-          media: uploadedImages,
+          media: mediaToSave,
         }),
       });
 
       if (!response.ok) {
-        throw new Error('Erreur lors de la création');
+        throw new Error('Erreur lors de la mise à jour');
       }
 
-      const product = await response.json();
-
       // Success
-      alert('✅ Produit créé avec succès !');
-      router.push(`/admin/products/${product.id}`);
+      alert('Produit mis à jour avec succès !');
+      router.push('/admin/products');
     } catch (error) {
-      console.error('Erreur création produit:', error);
-      alert('❌ Erreur lors de la création du produit');
+      console.error('Erreur mise à jour produit:', error);
+      alert('Erreur lors de la mise à jour du produit');
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 font-medium">Chargement du produit...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -221,27 +281,27 @@ export default function NewProductPage() {
                 <ArrowLeft className="w-5 h-5 text-gray-700" />
               </Link>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Nouveau produit</h1>
+                <h1 className="text-2xl font-bold text-gray-900">Modifier le produit</h1>
                 <p className="text-sm text-gray-600 mt-0.5">
-                  Ajoutez un nouveau produit à votre catalogue
+                  {formData.name || 'Sans titre'}
                 </p>
               </div>
             </div>
 
             <button
               onClick={handleSubmit}
-              disabled={loading}
+              disabled={saving}
               className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
             >
-              {loading ? (
+              {saving ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  Création...
+                  Enregistrement...
                 </>
               ) : (
                 <>
                   <Save className="w-5 h-5" />
-                  Créer
+                  Enregistrer
                 </>
               )}
             </button>
@@ -305,18 +365,18 @@ export default function NewProductPage() {
               </button>
               <button
                 type="submit"
-                disabled={loading}
+                disabled={saving}
                 className="flex-1 flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition-all disabled:opacity-50 font-semibold shadow-md hover:shadow-lg"
               >
-                {loading ? (
+                {saving ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    Création en cours...
+                    Enregistrement en cours...
                   </>
                 ) : (
                   <>
                     <Save className="w-5 h-5" />
-                    Créer le produit
+                    Enregistrer les modifications
                   </>
                 )}
               </button>

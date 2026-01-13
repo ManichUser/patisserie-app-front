@@ -35,7 +35,7 @@ export default function AdminLayout({
     { name: 'Produits', href: '/admin/products', icon: Package },
     { name: 'Catégories', href: '/admin/categories', icon: Grid3x3 },
     { name: 'Commandes', href: '/admin/orders', icon: ShoppingCart },
-    { name: 'Ventes', href: '/admin/sales', icon: BarChart3 },
+    { name: 'Comptabilité', href: '/admin/sales', icon: BarChart3 },
     { name: 'Dépenses', href: '/admin/expenses', icon: DollarSign },
     { name: 'Offres spéciales', href: '/admin/special-offers', icon: Tag },
     { name: 'Clients', href: '/admin/customers', icon: Users },
