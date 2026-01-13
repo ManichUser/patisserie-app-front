@@ -19,7 +19,8 @@ import {
   LogOut,
   Bell,
   Home,
-  LayoutDashboardIcon
+  LayoutDashboardIcon,
+  MessageCircle
 } from 'lucide-react'
 
 export default function AdminLayout({
@@ -41,7 +42,8 @@ export default function AdminLayout({
     { name: 'Clients', href: '/admin/customers', icon: Users },
     { name: 'Recommandations', href: '/admin/recommendations', icon: AlertCircle },
     { name: 'Paramètres', href: '/admin/settings', icon: Settings },
-    { name: 'Home', href: '/home', icon: Home },
+    { name: 'WhatsApp Bot', href: '/admin/whatsapp', icon: MessageCircle },
+    { name: 'Home', href: '/home', icon: Home }
   ]
 
   const isActive = (href: string) => {
